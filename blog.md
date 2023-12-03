@@ -34,12 +34,12 @@ In this app, we will use the OpenAI REST API, instead of the SDK for JS. The rea
 
 ## How to create the GPT Chat Bot
 
-As mentioned, the fundamental means to interact with ChatGPT is by using the prompts. In the context of a chat bot, it is a bit different with the normal prompts. Instead of a single prompt that is independent from each other, the chatbot needs to know
+Before getting start to the app, let's begin with the theory part on how to build a chatbot using ChatGPT. As mentioned, the fundamental mean to interact with ChatGPT is by using the prompts. In the context of a chatbot, it is a bit different with the normal prompts. Instead of a single independent prompt, the chatbot needs to know
 
-- The general instruction for the chat bot agent
 - The context of the conversation (a series of messages in timely order)
+- The general instruction for the chat bot agent
 
-Therefore, we need to send multiple prompts, also in the same order to ChatGPT and the first prompt is to instruct how the chat bot behaves and what is the information it needs. For example, the chatbot can be the mobile phone's sales agent, where it will answer customers about what phone models are available and what are the prices?
+Therefore, instead of 1 single prompt, we need to send multiple prompts, also in the same timely order to ChatGPT and the first prompt is to instruct how the chat bot behaves and what is the information it needs. For example, the chatbot can be the mobile phone's sales agent, where it will answer customers about what phone models are available and what are the prices?
 
 In this app, we will instruct the bot to be a Finnish language teacher, who will do conversation with students to practise the language. So our first prompt could be
 
