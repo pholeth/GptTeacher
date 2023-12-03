@@ -6,11 +6,13 @@ In this article, I would like to show how to develop a language teacher agent or
 
 ## About the App
 
-Our mobile app is called GptTeacher and it would be very simple. When started, the language agent starts the conversation by asking a question in Finnish (currently only Finnish is supported as it is the language I'm learning now) then the user can answer the question and the language agent continue asking question, and the conversation just goes on and on forever.
+Our mobile app is called **GptTeacher** and it would be very simple. When started, the language agent starts the conversation by asking a question in Finnish (currently only Finnish is supported as it is the language I'm learning now) then the user can answer the question and the language agent continue asking question, and the conversation just goes on and on forever.
 
 Following is the screenshot of the app (from emulator),
 
 ![App screenshot](./images/appScreenshot1.png)
+
+Please ignore the Finnish part if you don't understand. Basically, it is the conversation between the language agent and the users.
 
 The app is built using React Native and the OpenAI API. The main focus is to show how to build a chatbot style application similar to ChatGPT chat or sales chat bot. The article assumes that you already knew some basics about OpenAI API and no knowledge about React Native (some React background is recommended but not required). In case you don't have any knowledge about ChatGPT, it is recommended that you check the previous article [here](https://reactron.dev/develop-an-app-with-chatgpt/).
 
@@ -105,7 +107,7 @@ The core of the app is more in how we configure and set up the prompts to instru
 
 ## Get Started to the App
 
-To get started, first setup the environment and create a sample React Native app. From here https://reactnative.dev/docs/environment-setup it has more info on how to prepare the environment setup. **Note that** both Windows PC and MacOS can use React Native, but to test and deploy for iOS platform, MacOS is required.
+Now get started to the app, first we need to setup the environment and create a sample React Native app. From here https://reactnative.dev/docs/environment-setup it has more info on how to prepare the environment setup. **Note that** both Windows PC and MacOS can use React Native, but to test and deploy for iOS platform, MacOS is required.
 
 After the setup environment is done, first we will start by creating a sample app, the following command will create the whole sample app and ready to run. The command should run to the end successfully.
 
@@ -131,7 +133,7 @@ We're done for creating a sample app. How quickly to start and awesome for mobil
 
 ### 1. Prepare the API key
 
-First, we need to obtain or create the new API key from the OpenAI developer dashboard https://platform.openai.com/api-keys.
+Next, we need to obtain or create the new API key from the OpenAI developer dashboard https://platform.openai.com/api-keys.
 
 Then create a new file `.env` in the root folder,
 
@@ -157,7 +159,7 @@ Config.OPENAI_API_KEY; // the api key
 
 ### 2. Make the OpenAI prompt request
 
-For the network, we use the package `axios` to make requests to the OpenAI REST API. Here is the helper function where we embed the API KEY, send the prompts and get the response from the API.
+For the HTTP requests, we use the package `axios` to make requests to the OpenAI REST API. Here is the helper function where we embed the API KEY, send the prompts and get the response from the API.
 
 ```javascript
 import Config from 'react-native-config';
@@ -196,7 +198,7 @@ const sendPrompts = async (messages: GptPrompt[]) => {
 
 ### React Native (RN) components
 
-Built on top of the React concepts, React Native also operates around the UI components and the flow of component states and properties updates, it also updates the UI automatically. The whole React thing is also applied here. However, there are 2 main differences with the React Web on the surface,
+Going further to the React Native, built on top of the React concepts, React Native also operates around the UI components and the flow of component states and properties updates, it also updates the UI automatically. The whole React thing is also applied here. However, there are 2 main differences with the React Web on the surface,
 
 - Instead of HTML components, RN provides the whole new and core set of native UI components. For example, `<div>` becomes `<View />` and `<p>` or `<span>` become `<Text />`. It is called **native** since these components will look like a native component in the target platform.
 
@@ -204,15 +206,15 @@ Built on top of the React concepts, React Native also operates around the UI com
 
 There are slightly more differences on the surface and under the hood between React and React Native, but with the React background on the Web, one can easily get familiar and start to develop the apps quickly.
 
-Now let's go build the app. Note that the article's aim is to give the introduction and a glance into the core components in RN and will not go deeper into those.
+Now let's start with the UI. Note that the article's aim is to give the introduction and a glance into the core components in RN and will not go deeper into those.
 
 Our app basically will need 3 basic components,
 
-- A text input component to let users input the answer (`<TextInput />`)
-- A button component that user presses to send the answer (`<Button />`)
-- A scrollable view to display the messages. It is scrollable since there might be a lot of messages and the view should be able to scroll to the bottom (`<ScrollView />`)
+- A text input component to let users input the answer (component `<TextInput />` in RN)
+- A button component that user presses to send the answer (component `<Button />` in RN)
+- A scrollable view to display the messages. It is scrollable since there might be a lot of messages and the view should be able to scroll to the bottom (component `<ScrollView />` in RN)
 
-Here is the simplified code version for placing out these components
+Here is the simplified code version for placing out these components into our UI.
 
 ```js
 <View style={styles.container}>
@@ -241,11 +243,11 @@ Here is the simplified code version for placing out these components
 </View>
 ```
 
-Note that all the components have the optional `style` prop instead of `className` as in Web to define the styles for the component (all other properties are defined by the component itself). The code above defines the layout, in which, the input text and the button to the bottom and the rest of the space is for the scroll view to contain the messages and able to scroll.
+The code above defines the layout, in which, the input text and the button to the bottom and the rest of the space is for the scroll view to contain the messages and able to scroll.
 
 ![Layout](./images/layout.png)
 
-Following is how the styles are created and defined.
+Note that all the components have the optional `style` prop instead of `className` as in Web to define the styles for the component (all other properties are defined by the component itself). Following is how the styles are created and defined.
 
 ```js
 const styles = StyleSheet.create({
@@ -278,11 +280,11 @@ const styles = StyleSheet.create({
 
 The style's attribute and value are pretty much the same in Web, except that there is no `px` or `em` unit. Styles in RN are unitless and represent the density-independent pixel (or `dp` unit). As on mobile devices, there are various screen sizes and pixel densities, it is not so helpful to define exact pixels by using `px` or `em`. One could display nicely on a low density phone but so small or broken on high end, high density phones.
 
-In this layout, for the scrollable view, we set `flex: 1` to expand the whole space as much as possible like in flex box.
+In this layout, for the scrollable view, we set `flex: 1` to expand the whole space as much as possible like in flex box. This is just to show how similiar between the React Web and React Native.
 
-### Main Logic
+### Implementation
 
-The main logic is also quite straightforward. We maintain in the state the list of prompts, each prompt is an object with 2 keys, `role` and `content`. Initially, the prompt contains 2 items, the first item is for the system to set the instruction and the second one is for the user to ask to start the conversation.
+The implementation is also quite straightforward. We maintain in the app's state the list of prompts, each prompt is an object with 2 keys, `role` and `content`. Initially, the prompt contains 2 items, the first item is for the system to set the instruction and the second one is for the user to ask to start the conversation.
 
 ```js
 const [prompts, setPrompts] = useState<GptPrompt[]>([
@@ -313,18 +315,17 @@ const handlePress = async () => {
 };
 ```
 
-We now have the UI, the logic to handle the chat bot, all the needed blocks to build and complete build the app. In the future,
-the app can be easily extended by adding the features that the language agent can speak and the user replies in voice, like the real conversation, by using the services from the cloud providers such as AWS, Azure or Google cloud.
+We now have all the connecting pieces to complete the app. In the future, the app can be easily integrated with the features that the language agent can speak (text-to-voice) and the user replies in voice (voice-to-text), like the actual real conversation, by using the services from the cloud providers such as AWS, Azure or Google cloud.
 
 ## Conclusion
 
-The article has presented how to build a chat bot with ChatGPT using OpenAI API. Once again, it is shown how easy nowadays to build a smart and interesting app with just some simple tasks. The article also took a chance to introduce React Native, a React-based framework that helps building the mobile apps for cross platforms. I believe it is a great solution that has reduced the cost in developing apps for each separate platform. In addition, the code is simple and intuitive, even if you're totally new to React, the code itself is also self explanatory, making it quick and easy to get into development. Especially for those, who come from Web background, now can jump into the mobile area directly without much hassles.
+To recap, the article has presented how to build a chat bot with ChatGPT. Once again, it is shown how easy nowadays to build a smart and interesting app with just some simple steps. The article also took a chance to introduce React Native, a React-based framework that helps building the mobile apps for cross platforms. I believe it is a great solution to reduce the cost of developing apps for each separate platform. In addition, the RN code, which is based on React, which is well-known for quick learning curve, is simple and intuitive. Even if you're totally new to React, the code itself is also self explanatory, making it quick and easy to get right into development. Especially for those, who come from Web background, now can jump into the mobile area directly without much hassles.
 
-Combining both, I believe there are plenty of exciting spaces and applications that can utilize both technologies. The creativity is again limitless!
+Combining both, I believe there will be plenty of exciting spaces and applications that can utilize both technologies. The creativity is again limitless! Thank you.
 
 ### Source code
 
-You can find the source code from the zip file for the complete app. It is not exactly the same but the main idea is the same.
+You can find the source code from the zip file for the complete working app.
 
 ### Publishing the app
 
