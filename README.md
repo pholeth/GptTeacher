@@ -2,6 +2,10 @@
 
 GptTeacher is mobile app for stuyding Finnish language by interact conversation between the user and the language teacher chatbot. The app starts by the teacher asking a question in Finnish, then the user can answer the question and the teacher continue asking question, and so on, the conversation just goes on and on forever.
 
+Following is the screenshot of the app (from emulator),
+
+![App screenshot](./images/appScreenshot1.png)
+
 This is a [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli) and using the ChatGPT OpenAI API for building the chatbot
 
 # Getting Started
