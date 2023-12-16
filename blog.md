@@ -6,13 +6,14 @@ In this article, I would like to show how to develop a language teacher agent or
 
 ## About the App
 
-Our mobile app is called **GptTeacher** and it would be very simple. When started, the language agent starts the conversation by asking a question in Finnish (currently only Finnish is supported as it is the language I'm learning now) then the user can answer the question and the language agent continue asking question, and the conversation just goes on and on forever.
+Our mobile app is called **GptTeacher** and it would be very simple. When started, user can select the language to study and press the "Let's start" button. The agent starts the conversation by asking a question in the stuyding language then the user can answer the question and the language agent continue asking question, and the conversation just goes on and on forever. The implication is that the learner will try to answer it by speaking and then enter the answer to reply.
 
 Following is the screenshot of the app (from emulator),
 
 ![App screenshot](./images/appScreenshot1.png)
+![App screenshot](./images/appScreenshot2.png)
 
-Please ignore the Finnish part if you don't understand. Basically, it is the conversation between the language agent and the users.
+Please ignore the Finnish part if you don't understand :D. Basically, it is the conversation between the language agent and the users. Throughout the article, for conveniences, it assumed that users selected Finnish to learn.
 
 The app is built using React Native and the OpenAI API. The main focus is to show how to build a chatbot style application similar to ChatGPT chat or sales chat bot. The article assumes that you already knew some basics about OpenAI API and no knowledge about React Native (some React background is recommended but not required). In case you don't have any knowledge about ChatGPT, it is recommended that you check the previous article [here](https://reactron.dev/develop-an-app-with-chatgpt/).
 

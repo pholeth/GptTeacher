@@ -21,14 +21,25 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
 
-const INSTRUCTION = `You are a Finnish language teacher. Given the following topics (separated by comma): Healthcare, Family, Environment,
+// Simply add new language to support
+const SUPPORTED_LANGUAGES = [
+  'English',
+  'French',
+  'Spanish',
+  'Finnish',
+  'Swedish',
+];
+
+const getInstruction = (
+  language: string,
+) => `You are a ${language} language teacher. Given the following topics (separated by comma): Healthcare, Family, Environment,
 Work, News, Media, Housing.
 
-Pick randomly one from the topics above and start a conversation (in Finnish) with the students.
+Pick randomly one from the topics above and start a conversation (in ${language}) with the students.
 `;
 
-const FIRST_ASK =
-  "Let's start by asking me a question (in Finnish) in a random topic described above";
+const getFirstAsk = (language: string) =>
+  `Let's start by asking me a question (in ${language}) in a random topic described above`;
 
 const TEACHER = 1;
 const STUDENT = 0;
@@ -93,6 +104,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  startBtn: {
+    //borderWidth: 1,
+    //borderColor: '#222222',
+    marginTop: 80,
+  },
 });
 
 function App(): JSX.Element {
@@ -102,17 +118,24 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const [prompts, setPrompts] = useState<GptPrompt[]>([
-    {role: 'system', content: INSTRUCTION},
-    {role: 'user', content: FIRST_ASK},
-  ]);
-
+  // selected language to learn
+  const [language, setLanguage] = useState('English');
   const [text, onChangeText] = useState('');
 
-  const handleStart = async () => {
-    const prompt = await sendPrompts(prompts);
+  // the prompts
+  const [prompts, setPrompts] = useState<GptPrompt[]>([]);
 
-    prompt && setPrompts([...prompts, prompt]);
+  const updateLanguage = (lang: string) => () => setLanguage(lang);
+
+  const handleStart = async () => {
+    const initPrompts = [
+      {role: 'system', content: getInstruction(language)},
+      {role: 'user', content: getFirstAsk(language)},
+    ];
+
+    const prompt = await sendPrompts(initPrompts);
+
+    prompt && setPrompts([...initPrompts, prompt]);
   };
 
   const handlePress = async () => {
@@ -140,6 +163,8 @@ function App(): JSX.Element {
     ]);
 
   const isStarted = messages.length > 0;
+  const btnColor = (refLanguage: string) =>
+    language === refLanguage ? 'purple' : '#999';
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -148,7 +173,22 @@ function App(): JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <View style={styles.container}>
-        {!isStarted && <Button title="Let's start" onPress={handleStart} />}
+        {!isStarted && (
+          <>
+            {SUPPORTED_LANGUAGES.map((lang: string) => (
+              <Button
+                key={lang}
+                title={lang}
+                color={btnColor(lang)}
+                onPress={updateLanguage(lang)}
+              />
+            ))}
+
+            <View style={styles.startBtn}>
+              <Button title="Let's start" onPress={handleStart} />
+            </View>
+          </>
+        )}
 
         {isStarted && (
           <>
